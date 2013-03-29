@@ -548,6 +548,18 @@ class Thing(formencode.Schema):
             results.append(result)
         return results
 
+    def to_dict_list(self):
+        """
+        make current findall() result into a list of dict
+        """
+        results = []
+        for result in self._results:
+            d = {}
+            for column_name in self.table.columns.keys():
+                d[column_name] = getattr(result, column_name)
+            results.append(d)
+        return results
+
     def __repr__(self):
         if self._results:
             return repr(self._results)
